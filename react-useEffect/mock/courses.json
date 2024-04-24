@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "title": "Web Dev Foundation",
+    "status": true,
+    "fee": 50000,
+    "student_count": 15
+  },
+  {
+    "id": 2,
+    "title": "Special Web Design",
+    "status": true,
+    "fee": 300000,
+    "student_count": 7
+  }
+]
