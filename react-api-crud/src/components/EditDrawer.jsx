@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { dataContext } from "../contexts/DataContext";
+import { baseUrl } from "../config/config";
+import axios from "axios";
+import { courseApi } from "../api/course";
 
 const EditDrawer = () => {
   const {
@@ -25,14 +28,23 @@ const EditDrawer = () => {
       fee: feeRef.current.valueAsNumber,
     };
     setIsLoading(true);
-    const res = await fetch("http://localhost:5173/api/courses/" + id, {
-      method: "PUT",
-      headers: new Headers({ "content-type": "application/json" }),
-      body: JSON.stringify(updateEditCourse),
-    });
-    const json = await res.json();
+    // const res = await fetch(baseUrl+"/courses/" + id, {
+    //   method: "PUT",
+    //   headers: new Headers({ "content-type": "application/json" }),
+    //   body: JSON.stringify(updateEditCourse),
+    // });
+    // const json = await res.json();
+    const res = await courseApi.put(
+      `/courses/${id}`,
+      JSON.stringify(updateEditCourse),
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
     setIsLoading(false);
-    updateCourse(json);
+    updateCourse(res.data);
     console.log(closeRef.current.value);
     closeRef.current.checked && toggleEditDrawer();
   };

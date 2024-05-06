@@ -1,14 +1,18 @@
 import React, { useContext, useState } from "react";
 import { dataContext } from "../contexts/DataContext";
+import { baseUrl } from "../config/config";
+import axios from "axios";
+import { courseApi } from "../api/course";
 
 const DeleteRowBtn = ({ id }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { deleteCourse } = useContext(dataContext);
   const handleDeleteBtn = async () => {
     setIsLoading(true);
-    const res = await fetch("http://localhost:5173/api/courses/" + id, {
-      method: "DELETE",
-    });
+    // const res = await fetch(baseUrl+"/courses/" + id, {
+    //   method: "DELETE",
+    // });
+    const res=await courseApi.delete(`/courses/${id}`)
     if (res.status === 204) {
       setIsLoading(false);
       deleteCourse(id);

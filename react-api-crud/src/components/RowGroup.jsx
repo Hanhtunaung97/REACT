@@ -3,6 +3,9 @@ import Row from "./Row";
 import LoaderRow from "./LoaderRow";
 import { dataContext } from "../contexts/DataContext";
 import EmptyRow from "./EmptyRow";
+import { baseUrl } from "../config/config";
+import axios from "axios";
+import { courseApi } from "../api/course";
 
 const RowGroup = () => {
   const { courses, setCourses } = useContext(dataContext);
@@ -12,9 +15,9 @@ const RowGroup = () => {
   console.log(loaderArray);
   useEffect(() => {
     const fetchCourses = async () => {
-      const res = await fetch("http://localhost:5173/api/courses");
-      const json = await res.json();
-      setCourses(json);
+      const res = await courseApi.get(`/courses`);
+      // const json = await res.json();
+      setCourses(res.data);
       setReady(true);
     };
     fetchCourses();
