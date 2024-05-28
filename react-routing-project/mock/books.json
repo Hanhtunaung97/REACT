@@ -1,72 +1,82 @@
 [
-    {
-        "id": 1,
-        "book": "To Kill a Mockingbird",
-        "author": "Harper Lee",
-        "slug": "to-kill-a-mockingbird",
-        "description": "A novel about the serious issues of rape and racial inequality, presented through the eyes of a child."
-    },
-    {
-        "id": 2,
-        "book": "1984",
-        "author": "George Orwell",
-        "slug": "1984",
-        "description": "A dystopian novel set in a totalitarian society under constant surveillance."
-    },
-    {
-        "id": 3,
-        "book": "The Great Gatsby",
-        "author": "F. Scott Fitzgerald",
-        "slug": "the-great-gatsby",
-        "description": "A story of the mysteriously wealthy Jay Gatsby and his love for Daisy Buchanan during the Jazz Age."
-    },
-    {
-        "id": 4,
-        "book": "Pride and Prejudice",
-        "author": "Jane Austen",
-        "slug": "pride-and-prejudice",
-        "description": "A romantic novel that charts the emotional development of the protagonist, Elizabeth Bennet."
-    },
-    {
-        "id": 5,
-        "book": "The Catcher in the Rye",
-        "author": "J.D. Salinger",
-        "slug": "the-catcher-in-the-rye",
-        "description": "A novel about the experiences of a young man named Holden Caulfield, reflecting on teenage confusion and rebellion."
-    },
-    {
-        "id": 6,
-        "book": "Moby-Dick",
-        "author": "Herman Melville",
-        "slug": "moby-dick",
-        "description": "The narrative of Captain Ahab's obsessive quest to kill the white whale, Moby-Dick."
-    },
-    {
-        "id": 7,
-        "book": "War and Peace",
-        "author": "Leo Tolstoy",
-        "slug": "war-and-peace",
-        "description": "A historical novel that intertwines the lives of several families during the Napoleonic Wars."
-    },
-    {
-        "id": 8,
-        "book": "The Hobbit",
-        "author": "J.R.R. Tolkien",
-        "slug": "the-hobbit",
-        "description": "A fantasy novel about the journey of Bilbo Baggins, who joins a group of dwarves to recover their treasure from the dragon Smaug."
-    },
-    {
-        "id": 9,
-        "book": "Jane Eyre",
-        "author": "Charlotte Brontë",
-        "slug": "jane-eyre",
-        "description": "A novel following the emotions and experiences of its eponymous heroine, including her growth to adulthood and love for Mr. Rochester."
-    },
-    {
-        "id": 10,
-        "book": "The Catch-22",
-        "author": "Joseph Heller",
-        "slug": "catch-22",
-        "description": "A satirical novel set during World War II, highlighting the absurdities of war and bureaucracy."
-    }
+  {
+    "id": 1,
+    "book": "To Kill a Mockingbird",
+    "author": "Harper Lee",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/To_Kill_a_Mockingbird_%28first_edition_cover%29.jpg/1200px-To_Kill_a_Mockingbird_%28first_edition_cover%29.jpg",
+    "slug": "to-kill-a-mockingbird",
+    "description": "A novel about the serious issues of rape and racial inequality, presented through the eyes of a child."
+  },
+  {
+    "id": 2,
+    "book": "1984",
+    "author": "George Orwell",
+    "image": "https://m.media-amazon.com/images/I/61NAx5pd6XL._AC_UF1000,1000_QL80_.jpg",
+    "slug": "1984",
+    "description": "A dystopian novel set in a totalitarian society under constant surveillance."
+  },
+  {
+    "id": 3,
+    "book": "The Great Gatsby",
+    "author": "F. Scott Fitzgerald",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR58kbZBMubuUmnuwucori1oV9AHUXDhGq8T7GYtt1zcA&s",
+    "slug": "the-great-gatsby",
+    "description": "A story of the mysteriously wealthy Jay Gatsby and his love for Daisy Buchanan during the Jazz Age."
+  },
+  {
+    "id": 4,
+    "book": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "image": "https://nationalbookswap.com/pbs/l/37/9137/9780582529137.jpg",
+    "slug": "pride-and-prejudice",
+    "description": "A romantic novel that charts the emotional development of the protagonist, Elizabeth Bennet."
+  },
+  {
+    "id": 5,
+    "book": "The Catcher in the Rye",
+    "author": "J.D. Salinger",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmtWgq6tTVtT_CluoMU0-PntXerZBCh1aXmA&s",
+    "slug": "the-catcher-in-the-rye",
+    "description": "A novel about the experiences of a young man named Holden Caulfield, reflecting on teenage confusion and rebellion."
+  },
+  {
+    "id": 6,
+    "book": "Moby-Dick",
+    "author": "Herman Melville",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdpe8FcHAx0ry0dJh7QrqqtPDO-y_31MsZNg&s",
+    "slug": "moby-dick",
+    "description": "The narrative of Captain Ahab's obsessive quest to kill the white whale, Moby-Dick."
+  },
+  {
+    "id": 7,
+    "book": "War and Peace",
+    "author": "Leo Tolstoy",
+    "image": "https://cdn.kobo.com/book-images/76ab430c-81d6-4b00-87a1-cd92521bccc6/1200/1200/False/war-and-peace-illustrated-5.jpg",
+    "slug": "war-and-peace",
+    "description": "A historical novel that intertwines the lives of several families during the Napoleonic Wars."
+  },
+  {
+    "id": 8,
+    "book": "The Hobbit",
+    "author": "J.R.R. Tolkien",
+    "image": "https://cdn.kobo.com/book-images/cf32789f-22db-4ad0-bba4-9c0bf69fb872/1200/1200/False/the-hobbit.jpg",
+    "slug": "the-hobbit",
+    "description": "A fantasy novel about the journey of Bilbo Baggins, who joins a group of dwarves to recover their treasure from the dragon Smaug."
+  },
+  {
+    "id": 9,
+    "book": "Jane Eyre",
+    "author": "Charlotte Brontë",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIywDJesk3IHrRZYJo3sZZe_KmKdWqP9hOeg&s",
+    "slug": "jane-eyre",
+    "description": "A novel following the emotions and experiences of its eponymous heroine, including her growth to adulthood and love for Mr. Rochester."
+  },
+  {
+    "id": 10,
+    "book": "The Catch-22",
+    "author": "Joseph Heller",
+    "image": "https://upload.wikimedia.org/wikipedia/en/9/99/Catch22.jpg",
+    "slug": "catch-22",
+    "description": "A satirical novel set during World War II, highlighting the absurdities of war and bureaucracy."
+  }
 ]
