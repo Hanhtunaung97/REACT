@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getBookData } from "./service/bookUrl.service";
-import useFetch from "./hook/useFetch";
 import { Route, Routes } from "react-router-dom";
-import { DetailBookPage, HomePage } from "./page";
+import { AdminPage, BlogPage, DashboardPage, DetailBookPage, HomePage, InventoryPage, UserPage } from "./page";
 import { NavComponents } from "./components";
 import NotFound from "./NotFound";
 
@@ -14,7 +12,14 @@ const App = () => {
       <NavComponents />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/detail/:id" element={<DetailBookPage />} />
+        {/* <Route path="/detail/:id" element={<DetailBookPage />} /> */}
+        <Route path="/detail/:slug" element={<DetailBookPage />} />
+        <Route path="/dashboard" element={<DashboardPage />}>
+        <Route index element={<InventoryPage/>}/>
+        <Route path="blog" element={<BlogPage/>}/>
+        <Route path="user" element={<UserPage/>}/>
+        </Route>
+        <Route path="/admin" element={<AdminPage/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

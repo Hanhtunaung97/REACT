@@ -1,12 +1,11 @@
-import React from "react";
-import useFetch from "../hook/useFetch";
-import { getBookData } from "../service/bookUrl.service";
+import React, { useContext } from "react";
 import { BookListComponents } from "../components";
 import Loading from "../Loading";
 import { Link } from "react-router-dom";
+import { apiContext } from "../store/ApiContextProvider";
 
 const HomePage = () => {
-  const { loading, error, data } = useFetch(getBookData, "books");
+  const {data,error,loading}=useContext(apiContext)
   return (
     <div className=" my-3">
       {loading ? (
@@ -14,7 +13,7 @@ const HomePage = () => {
       ) : (
         <div className="flex flex-wrap justify-between gap-y-3">
           {data.map((el) => (
-            <Link key={el.id} to={`/detail/${el.id}`}>
+            <Link key={el.id} to={`/detail/${el.slug}`}>
               <BookListComponents data={el} />
             </Link>
           ))}

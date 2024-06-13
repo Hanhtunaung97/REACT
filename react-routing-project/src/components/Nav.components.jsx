@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const NavComponents = () => {
   return (
@@ -6,8 +7,12 @@ const NavComponents = () => {
       <h1>LOGO</h1>
       <div>
         <ul className=" flex justify-between gap-x-5 items-center font-normal">
-          <li>Home</li>
-          <li>Books</li>
+          <li>
+            <Link to={"/"}>Home</Link>
+          </li>
+          <li>
+            <Link to={"/dashboard"}>Dashboard</Link>
+          </li>
         </ul>
       </div>
     </nav>
