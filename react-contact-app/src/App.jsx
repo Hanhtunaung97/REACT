@@ -1,12 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { LoginPages, RegisterPages } from "./pages";
+import { HomePages, LoginPages, RegisterPages } from "./pages";
 
 const App = () => {
   return <main>
     <Routes>
-      <Route path="/" element={<RegisterPages/>}/>
-      <Route path="/login" element={<LoginPages/>}/>
+      <Route path="/" element={<LoginPages/>}/>
+      <Route path="/register" element={<RegisterPages/>}/>
+      <Route path="/home" element={<HomePages/>}/>
     </Routes>
   </main>;
 };
