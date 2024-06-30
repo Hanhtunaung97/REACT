@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { ButtonComponents, InputFormComponents } from "../components";
+import { addNewContact } from "../service/contact.service";
+import { useNavigate } from "react-router-dom";
 
 const ContactAddPage = () => {
+  const nav = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,12 +14,17 @@ const ContactAddPage = () => {
   const handleInput = (e) => {
     setFormData((pre) => ({ ...pre, [e.target.name]: e.target.value }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    const res = await addNewContact(formData);
+    console.log(res);
+    if(res){
+      nav("/home")
+    }
+    // console.log(formData);
   };
   return (
-    <div className="Center">
+    <div className="Center ">
       <div className=" w-2/5 h-auto p-5 border shadow rounded-lg">
         <h1 className=" text-center text-2xl font-heading text-green-800 font-semibold">
           Create Your Contact

@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import {
   ContactAddPage,
+  ContactDetailPage,
   ContactPage,
   HomePages,
   LoginPages,
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/home" element={<HomePages />}>
           <Route index element={<ContactPage />} />
           <Route path="add" element={<ContactAddPage />} />
+          <Route path="contact/:id" element={<ContactDetailPage/>}/>
         </Route>
       </Routes>
     </main>
