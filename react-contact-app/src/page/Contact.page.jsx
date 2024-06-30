@@ -17,27 +17,27 @@ const ContactPage = () => {
       setItems((pre) => ({ ...pre, loading: true }));
       const res = await getContactData();
       console.log(res);
-      if (res.error) {
-        setItems((pre) => ({ ...pre, loading: false, error: res.msg }));
-      } else {
+      if (res) {
         setItems((pre) => ({ ...pre, loading: false, data: res }));
+      } else {
+        setItems((pre) => ({ ...pre, loading: false, error: res.msg }));
       }
     })();
   }, []);
   return (
-    <div className=" flex flex-col justify-center items-center p-3 gap-y-5">
+    <div className=" w-full ">
       {items.loading ? (
         <LoadingComponents />
       ) : (
-        <>
+        <div className=" flex gap-5 flex-col items-center justify-center">
           {items.error ? (
             <ErrorComponents>{items.error}</ErrorComponents>
           ) : (
             items.data.map((el) => (
-              <ContactCardComponents key={el.id} item={el} />
+              <ContactCardComponents key={el.id} data={el} />
             ))
           )}
-        </>
+        </div>
       )}
     </div>
   );

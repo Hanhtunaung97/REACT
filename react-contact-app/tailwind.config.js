@@ -5,7 +5,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Montserrat", " sans-serif"],
-        heading: ["Roboto", "sans-serif"],
+        heading: ["Roboto", " sans-serif"],
       },
     },
   },

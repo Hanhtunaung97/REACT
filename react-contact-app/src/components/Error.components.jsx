@@ -1,10 +1,9 @@
 import React from "react";
-import { IoWarning } from "react-icons/io5";
-
+import { IoIosWarning } from "react-icons/io";
 const ErrorComponents = ({ children }) => {
   return (
-    <div className="flex justify-center items-center gap-x-5 py-3 shadow text-red-600  font-heading mb-3">
-      <IoWarning />
+    <div className="flex justify-center items-center gap-x-5 py-3 my-5 shadow border  font-heading text-red-500">
+      <IoIosWarning />
       <h1>{children}</h1>
     </div>
   );

@@ -1,18 +1,17 @@
 import React from "react";
+import ButtonComponents from "./Button.components";
 import { useNavigate } from "react-router-dom";
 
-const ContactCardComponents = ({ item }) => {
-  const nav=useNavigate();
-  const handleRedirect=() => {
-    nav(`/home/contact/${item.id}`)
-  }
+const ContactCardComponents = ({ data }) => {
+    const nav=useNavigate();
+    const handleRedirect=() => {
+        nav(`/home/contact/${data.id}`)
+    }
   return (
-    <button onClick={handleRedirect} className=" w-full block">
-      <div className=" w-2/6 h-auto text-green-500 border shadow text-center rounded-lg p-3 hover:scale-95 duration-200 hover:bg-green-500 hover:text-white " >
-      <h3 className=" font-heading  font-semibold">{item.name}</h3>
-      <p>{item.phone}</p>
-    </div>
-    </button>
+    <ButtonComponents onClick={handleRedirect} style={"!w-1/3 hover:bg-white hover:text-blue-500 hover:border-blue-400"}>
+      <h1 className=" font-heading font-semibold">{data.name}</h1>
+      <p>{data.phone}</p>
+    </ButtonComponents>
   );
 };
 

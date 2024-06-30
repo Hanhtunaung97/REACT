@@ -1,23 +1,30 @@
 const initialState = {
-  data: null,
   loading: false,
+  data: null,
   error: null,
-  auth:false
+  auth: false,
 };
 
 export const authReducer = (store = initialState, action) => {
   switch (action.type) {
     case "process": {
-      return (store = { loading: true, data:null,error:null,auth:false });
-    }
-    case "error": {
-      return (store = { loading: false,auth:false, error: action.payload, data:null });
+      return (store = { loading: true, data: null, error: null, auth: null });
     }
     case "login": {
-      return (store = { loading: false,auth:true, error: null, data: action.payload });
+      return (store = {
+        loading: false,
+        data: action.payload,
+        error: null,
+        auth: null,
+      });
     }
-    case "logout": {
-      return (store = { loading: false, error: null, data: null ,auth:false});
+    case "error": {
+      return (store = {
+        loading: false,
+        data: null,
+        error: action.payload,
+        auth: false,
+      });
     }
     default:
       return store;

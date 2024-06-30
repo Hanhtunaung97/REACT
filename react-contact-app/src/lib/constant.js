@@ -1,1 +1,1 @@
-export const API_ENDPOINTS="https://contact.sankyitar.store/api/v1"
+export const API_ENDPOINT="https://contact.sankyitar.store/api/v1"

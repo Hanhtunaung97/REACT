@@ -13,60 +13,61 @@ import { Login } from "../service/auth.service";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../store/action/auth.action";
 
-const LoginPages = () => {
-  // const { apiDealing, loading, error, data } = useApi(Login);
-  const nav = useNavigate();
-  const {loading,error,data}=useSelector((store) =>store.auth )
+const LoginPage = () => {
+  const { loading, data, error, auth } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
+  const nav = useNavigate();
+  // const { dealingApi, loading, error, data } = useApi(Login);
   const [formData, setFormData] = useState({ email: "", password: "" });
-  console.log(loading,error,data);
+  const handleInputChange = (e) => {
+    setFormData((pre) => ({ ...pre, [e.target.name]: e.target.value }));
+  };
+  // console.log(store);
   useEffect(() => {
     data && nav("/home");
   }, [data]);
-  const handleInput = (e) =>
-    setFormData((pre) => ({ ...pre, [e.target.name]: e.target.value }));
   const handleSubmit = (e) => {
     e.preventDefault();
     loginAction(dispatch, formData);
+    // dealingApi(formData);
     // console.log(formData);
-    // apiDealing(formData);
   };
-
   return (
-    <PreventComponents check={localStorage.getItem("auth")} go={"/home"}>
+    <PreventComponents go={"/home"} tokenCheck={localStorage.getItem("auth")}>
       <ContainerComponents>
         {loading ? (
           <LoadingComponents />
         ) : (
           <div className="Center">
             <div className=" w-2/5 h-auto space-y-5">
-              <h1 className=" text-center text-2xl font-heading text-green-800 font-semibold">
+              <h1 className=" font-heading text-2xl text-center font-bold text-blue-700">
                 Login Your Contact
               </h1>
               {error && <ErrorComponents>{error}</ErrorComponents>}
               <form onSubmit={handleSubmit} className=" flex flex-col gap-y-5">
                 <InputFormComponents
-                  label={"Enter Your Email :"}
+                  onChange={handleInputChange}
+                  value={formData.email}
+                  label={"Enter Your Email"}
                   type={"email"}
                   name={"email"}
-                  placeholder={"example@gmail.com"}
-                  value={formData.email}
-                  onChange={handleInput}
+                  placeholder="example@gmail.com"
                 />
                 <InputFormComponents
-                  label={"Enter Password :"}
+                  onChange={handleInputChange}
+                  value={formData.password}
+                  label={"Enter Password"}
                   type={"password"}
                   name={"password"}
-                  value={formData.password}
-                  onChange={handleInput}
+                  placeholder="password"
                 />
                 <ButtonComponents type="submit">Login</ButtonComponents>
               </form>
-              <p className=" text-green-500 select-none">
-                You haven't account yet! Plz sign up{" "}
+              <p className=" text-blue-400 font-heading ">
+                You haven't account yet ! plz sign up{" "}
                 <button
-                  className=" text-green-700 underline active:scale-90 active:underline-offset-4 duration-300 font-semibold active:text-green-600"
                   onClick={() => nav("/register")}
+                  className=" text-blue-500 underline active:underline-offset-4 duration-200"
                 >
                   Register
                 </button>
@@ -79,4 +80,4 @@ const LoginPages = () => {
   );
 };
 
-export default LoginPages;
+export default LoginPage;
