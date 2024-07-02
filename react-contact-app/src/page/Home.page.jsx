@@ -25,7 +25,7 @@ const HomePage = () => {
   },[])
   return (
     // <PreventComponents go={"/"} tokenCheck={!localStorage.getItem("auth")}>
-    <div className=" h-screen">
+    <div className=" h-full">
       <NavComponents>
         <h1 className=" font-heading text-xl font-semibold text-blue-600">
           Contact App

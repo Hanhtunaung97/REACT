@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ButtonComponents, InputFormComponents } from "../components";
-import { addNewContact } from "../service/contact.service";
-import { useNavigate } from "react-router-dom";
+import { addNewContact, updateContactData } from "../service/contact.service";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ContactAddPage = () => {
+  const location = useLocation();
+  // console.log(location);
   const nav = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -11,10 +13,21 @@ const ContactAddPage = () => {
     email: "",
     address: "",
   });
+  useEffect(() => {
+    if (location.state?.edit) {
+      const { name, phone, email, address } = location.state.data;
+      setFormData({ name, phone, email, address });
+    }
+  }, [location]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await addNewContact(formData);
-    console.log(res);
+    let res;
+    if (location.state?.edit) {
+      res = await updateContactData(location.state.id, formData);
+      console.log(res);
+    } else {
+      res = await addNewContact(formData);
+    }
     // console.log(formData);
     if (res) {
       nav("/home");
@@ -26,7 +39,7 @@ const ContactAddPage = () => {
   return (
     <div className=" h-auto w-2/6 space-y-5">
       <h1 className=" text-xl font-heading text-center font-bold text-blue-700">
-        Create Your Contact
+        {location.state?.edit ? "Edit Your Contact" : "Create Your Contact"}
       </h1>
 
       <form onSubmit={handleSubmit} className=" flex flex-col gap-y-5 ">
@@ -62,7 +75,9 @@ const ContactAddPage = () => {
           name={"address"}
           value={formData.address}
         />
-        <ButtonComponents type="submit">Create</ButtonComponents>
+        <ButtonComponents type="submit">
+          {location.state?.edit ? "Edit" : "Create"}
+        </ButtonComponents>
       </form>
     </div>
   );

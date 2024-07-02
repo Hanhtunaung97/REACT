@@ -34,7 +34,7 @@ const DetailContactPage = () => {
           {items.error ? (
             <ErrorComponents>{items.error}</ErrorComponents>
           ) : (
-            <div className=" w-full text-blue-500 flex flex-col gap-y-3 justify-center items-center border border-blue-200 rounded-lg p-5 shadow">
+            <div className=" w-full text-blue-500 flex flex-col gap-y-3 justify-center items-center border border-blue-200 rounded-lg p-5 shadow hover:bg-blue-50  hover:shadow hover:border-0 hover:scale-110">
               <h1 className=" font-heading font-semibold">{items.data.name}</h1>
               <p>{items.data.phone}</p>
               <p>{items.data.email}</p>
