@@ -10,24 +10,32 @@ import {
 import { useNavigate } from "react-router-dom";
 import useApi from "../hook/useApi";
 import { Login } from "../service/auth.service";
-import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../store/action/auth.action";
+import { useDispatch, useSelector } from "react-redux";
+import { issue, login, processing } from "../store/slice/auth.slice";
 
 const LoginPages = () => {
   // const { apiDealing, loading, error, data } = useApi(Login);
   const nav = useNavigate();
-  const {loading,error,data}=useSelector((store) =>store.auth )
+  const { loading, error, data } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ email: "", password: "" });
-  console.log(loading,error,data);
+  console.log(loading, error, data);
   useEffect(() => {
     data && nav("/home");
   }, [data]);
   const handleInput = (e) =>
     setFormData((pre) => ({ ...pre, [e.target.name]: e.target.value }));
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    loginAction(dispatch, formData);
+    dispatch(processing());
+    const res = await Login(formData);
+    if (res.data) {
+      dispatch(login(res.data));
+    } else {
+      dispatch(issue(res.msg));
+    }
+    // loginAction(dispatch, formData);
     // console.log(formData);
     // apiDealing(formData);
   };
