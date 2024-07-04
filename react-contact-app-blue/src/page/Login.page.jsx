@@ -12,6 +12,7 @@ import useApi from "../hook/useApi";
 import { Login } from "../service/auth.service";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "../store/action/auth.action";
+import { issue, login, processing } from "../store/slice/auth.slice";
 
 const LoginPage = () => {
   const { loading, data, error, auth } = useSelector((store) => store.auth);
@@ -26,9 +27,16 @@ const LoginPage = () => {
   useEffect(() => {
     data && nav("/home");
   }, [data]);
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
-    loginAction(dispatch, formData);
+    dispatch(processing())
+    const res=await Login(formData)
+    if(res.data){
+      dispatch(login(res.data))
+    }else{
+      dispatch(issue(res.msg))
+    }
+    // loginAction(dispatch, formData);
     // dealingApi(formData);
     // console.log(formData);
   };
