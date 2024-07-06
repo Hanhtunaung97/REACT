@@ -11,9 +11,9 @@ import {
 } from "../store/services/endpoints/contact.endpoints";
 
 const ContactPage = () => {
-  const { isError, isLoading, data, isSuccess } = useGetContactQuery();
+  const { isLoading, isError, data } = useGetContactQuery();
+  console.log(isLoading, isError, data);
   const [deleteFunction, deleteData] = useDeleteContactMutation();
-  const [deleteItem, setDeleteItem] = useState(false);
 
   // const [items, setItems] = useState({
   //   loading: true,

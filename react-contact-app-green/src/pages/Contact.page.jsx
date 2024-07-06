@@ -5,29 +5,36 @@ import {
   ErrorComponents,
   LoadingComponents,
 } from "../components";
+import {
+  useDeleteContactMutation,
+  useGetContactQuery,
+} from "../store/services/endpoints/contact.endpoints";
 
 const ContactPage = () => {
-  const [items, setItems] = useState({
-    loading: true,
-    data: null,
-    error: null,
-  });
-  const [deleteItem, setDeleteItem] = useState(false);
-  useEffect(() => {
-    (async () => {
-      setItems((pre) => ({ ...pre, loading: true }));
-      const res = await getContactData();
-      // console.log(res);
-      if (res.error) {
-        setItems((pre) => ({ ...pre, loading: false, error: res.msg }));
-      } else {
-        setItems((pre) => ({ ...pre, loading: false, data: res }));
-      }
-    })();
-  }, [deleteItem]);
+  const { isError, isLoading, data, isSuccess } = useGetContactQuery();
+  console.log(isError, isLoading, data, isSuccess);
+  const [deleteFunction, dataDelete] = useDeleteContactMutation();
+  // const [items, setItems] = useState({
+  //   loading: true,
+  //   data: null,
+  //   error: null,
+  // });
+  // const [deleteItem, setDeleteItem] = useState(false);
+  // useEffect(() => {
+  //   (async () => {
+  //     setItems((pre) => ({ ...pre, loading: true }));
+  //     const res = await getContactData();
+  //     // console.log(res);
+  //     if (res.error) {
+  //       setItems((pre) => ({ ...pre, loading: false, error: res.msg }));
+  //     } else {
+  //       setItems((pre) => ({ ...pre, loading: false, data: res }));
+  //     }
+  //   })();
+  // }, [deleteItem]);
   const deleteContact = async (id) => {
     console.log("delete Id", id);
-    const res = await deleteContactData(id);
+    const res = await deleteFunction(id);
     console.log(res);
     if (res) {
     }
@@ -35,14 +42,14 @@ const ContactPage = () => {
   };
   return (
     <div className=" flex flex-col justify-center items-center p-3 gap-y-5">
-      {items.loading ? (
+      {isLoading ? (
         <LoadingComponents />
       ) : (
         <>
-          {items.error ? (
-            <ErrorComponents>{items.error}</ErrorComponents>
+          {isError ? (
+            <ErrorComponents>{isError.message}</ErrorComponents>
           ) : (
-            items.data.map((el) => (
+            data.contacts.data.map((el) => (
               <ContactCardComponents
                 deleteContact={deleteContact}
                 key={el.id}
