@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { deleteContactData, getContactData } from "../service/contact.service";
+// import { deleteContactData, getContactData } from "../service/contact.service";
 import {
   ContactCardComponents,
   ErrorComponents,
@@ -9,17 +9,20 @@ import {
   useDeleteContactMutation,
   useGetContactQuery,
 } from "../store/services/endpoints/contact.endpoints";
+import { useNavigate } from "react-router-dom";
 
 const ContactPage = () => {
+  const nav = useNavigate();
   const { isError, isLoading, data, isSuccess } = useGetContactQuery();
   console.log(isError, isLoading, data, isSuccess);
   const [deleteFunction, dataDelete] = useDeleteContactMutation();
+  const [deleteItem, setDeleteItem] = useState(false);
+  const [fetchData, setFetchData] = useState([]);
   // const [items, setItems] = useState({
   //   loading: true,
   //   data: null,
   //   error: null,
   // });
-  // const [deleteItem, setDeleteItem] = useState(false);
   // useEffect(() => {
   //   (async () => {
   //     setItems((pre) => ({ ...pre, loading: true }));
@@ -32,6 +35,11 @@ const ContactPage = () => {
   //     }
   //   })();
   // }, [deleteItem]);
+  useEffect(() => {
+    if (isSuccess) {
+      setFetchData(data.contacts.data);
+    }
+  }, [isSuccess, deleteItem]);
   const deleteContact = async (id) => {
     console.log("delete Id", id);
     const res = await deleteFunction(id);
@@ -49,7 +57,7 @@ const ContactPage = () => {
           {isError ? (
             <ErrorComponents>{isError.message}</ErrorComponents>
           ) : (
-            data.contacts.data.map((el) => (
+            fetchData.map((el) => (
               <ContactCardComponents
                 deleteContact={deleteContact}
                 key={el.id}
