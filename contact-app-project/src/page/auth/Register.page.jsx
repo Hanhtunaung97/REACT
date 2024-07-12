@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,12 +13,16 @@ import { Label } from "@/components/ui/label";
 import { ErrorMessage, Form, Formik } from "formik";
 import * as yup from "yup";
 import { Loader2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../../store/services/EndPoints/auth.endpoints";
 import { ErrorComponents, LoadingComponents } from "../../components";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+import { ToastAction } from "@/components/ui/toast";
 const RegisterPage = () => {
-  const [registerFun, { isLoading, isError, isSuccess, data }] =
-    useSignUpMutation();
+  const nav = useNavigate();
+  const [registerFun, data] = useSignUpMutation();
+  const { toast } = useToast();
   const initialValue = {
     name: "",
     email: "",
@@ -26,7 +30,7 @@ const RegisterPage = () => {
     password_confirmation: "",
   };
   const handleSubmit = async (values) => {
-    console.log(values);
+    // console.log(values);
     await registerFun(values);
   };
   const validationSchema = yup.object({
@@ -50,18 +54,39 @@ const RegisterPage = () => {
         "Confirm password must be same your password"
       ),
   });
+  useEffect(() => {
+    if (data.error) {
+      const msg = data.error.data.message;
+      console.log(msg);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: msg,
+        action: (
+          <ToastAction altText="Sing In">
+            <Link to={"/"}>Sign In</Link>
+          </ToastAction>
+        ),
+      });
+    }else if(data.data){
+      nav("/")
+    }
+  }, [data]);
   return (
     <div className=" w-3/5 mx-auto  flex justify-center items-center h-full">
-      {isLoading ? (
+      {data.isLoading ? (
         <LoadingComponents />
       ) : (
         <>
-          {isError ? (
-            <ErrorComponents>{isError.message}</ErrorComponents>
+          {data.isError ? (
+           <>
+            <ErrorComponents/>
+            <Toaster />
+           </>
           ) : (
             <Card className=" basis-1/2">
               <CardHeader className=" flex justify-between items-center flex-row mb-3 ">
-                <CardTitle>Sign Up</CardTitle>
+                <CardTitle className=" font-headings" >Sign Up</CardTitle>
                 <CardDescription className="text-basic">
                   <Link to={"/"}>I already have an account!</Link>
                 </CardDescription>
@@ -94,6 +119,7 @@ const RegisterPage = () => {
                               type="name"
                               name="name"
                               placeholder="Enter your name"
+                              className="focus-visible:ring-blue-400"
                             />
                             <ErrorMessage
                               component={"p"}
@@ -111,6 +137,7 @@ const RegisterPage = () => {
                               type="email"
                               name="email"
                               placeholder="Enter your email"
+                              className="focus-visible:ring-blue-400"
                             />
                             <ErrorMessage
                               component={"p"}
@@ -128,6 +155,7 @@ const RegisterPage = () => {
                               type="password"
                               name="password"
                               placeholder="Enter password"
+                              className="focus-visible:ring-blue-400"
                             />{" "}
                             <ErrorMessage
                               component={"p"}
@@ -147,6 +175,7 @@ const RegisterPage = () => {
                               type="password"
                               name="password_confirmation"
                               placeholder="Confirm your password"
+                              className="focus-visible:ring-blue-400"
                             />{" "}
                             <ErrorMessage
                               component={"p"}
