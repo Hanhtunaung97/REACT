@@ -15,7 +15,11 @@ import * as yup from "yup";
 import { Loader2 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../../store/services/EndPoints/auth.endpoints";
-import { ErrorComponents, LoadingComponents } from "../../components";
+import {
+  AuthGuard,
+  ErrorComponents,
+  LoadingComponents,
+} from "../../components";
 import { useToast } from "@/components/ui/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { ToastAction } from "@/components/ui/toast";
@@ -68,143 +72,144 @@ const RegisterPage = () => {
           </ToastAction>
         ),
       });
-    }else if(data.data){
-      nav("/")
+    } else if (data.data) {
+      nav("/");
     }
   }, [data]);
   return (
-    <div className=" w-3/5 mx-auto  flex justify-center items-center h-full">
-      {data.isLoading ? (
-        <LoadingComponents />
-      ) : (
-        <>
-          {data.isError ? (
-           <>
-            <ErrorComponents/>
-            <Toaster />
-           </>
-          ) : (
-            <Card className=" basis-1/2">
-              <CardHeader className=" flex justify-between items-center flex-row mb-3 ">
-                <CardTitle className=" font-headings" >Sign Up</CardTitle>
-                <CardDescription className="text-basic">
-                  <Link to={"/"}>I already have an account!</Link>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Formik
-                  validateOnBlur={false}
-                  validateOnChange={false}
-                  validationSchema={validationSchema}
-                  initialValues={initialValue}
-                  onSubmit={handleSubmit}
-                >
-                  {({
-                    handleBlur,
-                    handleChange,
-                    isSubmitting,
-                    handleReset,
-                    values,
-                  }) => (
-                    <>
-                      <Form>
-                        <div className="grid w-full items-center gap-5">
-                          <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="name">Name</Label>
-                            <Input
-                              value={values.name}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              id="name"
-                              type="name"
-                              name="name"
-                              placeholder="Enter your name"
-                              className="focus-visible:ring-blue-400"
-                            />
-                            <ErrorMessage
-                              component={"p"}
-                              name="name"
-                              className=" text-danger text-xs"
-                            />
+    <AuthGuard>
+      <div className=" w-3/5 mx-auto  flex justify-center items-center h-full">
+        {data.isLoading ? (
+          <LoadingComponents />
+        ) : (
+          <>
+            {data.isError ? (
+              <>
+                <ErrorComponents />
+                <Toaster />
+              </>
+            ) : (
+              <Card className=" basis-1/2">
+                <CardHeader className=" flex justify-between items-center flex-row mb-3 ">
+                  <CardTitle className=" font-headings">Sign Up</CardTitle>
+                  <CardDescription className="text-basic">
+                    <Link to={"/"}>I already have an account!</Link>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Formik
+                    validateOnBlur={false}
+                    validateOnChange={false}
+                    validationSchema={validationSchema}
+                    initialValues={initialValue}
+                    onSubmit={handleSubmit}
+                  >
+                    {({
+                      handleBlur,
+                      handleChange,
+                      isSubmitting,
+                      handleReset,
+                      values,
+                    }) => (
+                      <>
+                        <Form>
+                          <div className="grid w-full items-center gap-5">
+                            <div className="flex flex-col space-y-1.5">
+                              <Label htmlFor="name">Name</Label>
+                              <Input
+                                value={values.name}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                id="name"
+                                type="name"
+                                name="name"
+                                placeholder="Enter your name"
+                                className="focus-visible:ring-blue-400"
+                              />
+                              <ErrorMessage
+                                component={"p"}
+                                name="name"
+                                className=" text-danger text-xs"
+                              />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                              <Label htmlFor="email">Email</Label>
+                              <Input
+                                value={values.email}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                id="email"
+                                type="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                className="focus-visible:ring-blue-400"
+                              />
+                              <ErrorMessage
+                                component={"p"}
+                                name="email"
+                                className=" text-danger text-xs"
+                              />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                              <Label htmlFor="password">Password</Label>
+                              <Input
+                                value={values.password}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="Enter password"
+                                className="focus-visible:ring-blue-400"
+                              />{" "}
+                              <ErrorMessage
+                                component={"p"}
+                                name="password"
+                                className=" text-danger text-xs"
+                              />
+                            </div>
+                            <div className="flex flex-col space-y-1.5">
+                              <Label htmlFor="password_confirmation">
+                                Confirm Password
+                              </Label>
+                              <Input
+                                value={values.password_confirmation}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                id="password_confirmation"
+                                type="password"
+                                name="password_confirmation"
+                                placeholder="Confirm your password"
+                                className="focus-visible:ring-blue-400"
+                              />{" "}
+                              <ErrorMessage
+                                component={"p"}
+                                name="password_confirmation"
+                                className=" text-danger text-xs"
+                              />
+                            </div>
+                            <Button
+                              type="submit"
+                              disabled={isSubmitting}
+                              className=" w-full bg-basic mt-3 flex items-center gap-x-5"
+                            >
+                              {isSubmitting && (
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              )}
+                              Sign Up
+                            </Button>
                           </div>
-                          <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                              value={values.email}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              id="email"
-                              type="email"
-                              name="email"
-                              placeholder="Enter your email"
-                              className="focus-visible:ring-blue-400"
-                            />
-                            <ErrorMessage
-                              component={"p"}
-                              name="email"
-                              className=" text-danger text-xs"
-                            />
-                          </div>
-                          <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="password">Password</Label>
-                            <Input
-                              value={values.password}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              id="password"
-                              type="password"
-                              name="password"
-                              placeholder="Enter password"
-                              className="focus-visible:ring-blue-400"
-                            />{" "}
-                            <ErrorMessage
-                              component={"p"}
-                              name="password"
-                              className=" text-danger text-xs"
-                            />
-                          </div>
-                          <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="password_confirmation">
-                              Confirm Password
-                            </Label>
-                            <Input
-                              value={values.password_confirmation}
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              id="password_confirmation"
-                              type="password"
-                              name="password_confirmation"
-                              placeholder="Confirm your password"
-                              className="focus-visible:ring-blue-400"
-                            />{" "}
-                            <ErrorMessage
-                              component={"p"}
-                              name="password_confirmation"
-                              className=" text-danger text-xs"
-                            />
-                          </div>
-
-                          <Button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className=" w-full bg-basic mt-3 flex items-center gap-x-5"
-                          >
-                            {isSubmitting && (
-                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            )}
-                            Sign Up
-                          </Button>
-                        </div>
-                      </Form>
-                    </>
-                  )}
-                </Formik>
-              </CardContent>
-            </Card>
-          )}
-        </>
-      )}
-    </div>
+                        </Form>
+                      </>
+                    )}
+                  </Formik>
+                </CardContent>
+              </Card>
+            )}
+          </>
+        )}
+      </div>
+    </AuthGuard>
   );
 };
 

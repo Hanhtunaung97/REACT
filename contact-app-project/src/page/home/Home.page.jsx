@@ -1,9 +1,15 @@
 import React from "react";
-import { AuthGuard, LottieComponents, NavComponents } from "../../components";
+import {
+  AuthGuard,
+  ErrorComponents,
+  FormComponents,
+  LoadingComponents,
+  LottieComponents,
+  NavComponents,
+} from "../../components";
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa6";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import {
   Sheet,
   SheetClose,
@@ -14,8 +20,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useGetAllContactsQuery } from "../../store/services/EndPoints/contact.endpoints";
 
 const HomePage = () => {
+  const { isLoading, isError, data, isSuccess } = useGetAllContactsQuery();
+  console.log(isLoading, isError, data, isSuccess);
+  const contactData = data?.contacts?.data;
+  console.log(contactData);
   return (
     <AuthGuard>
       <Sheet>
@@ -30,39 +41,41 @@ const HomePage = () => {
                 </Button>
               </div>
             </SheetTrigger>
-            <div className="mt-5 bg-white shadow rounded h-[500px] justify-center items-center flex flex-col gap-y-3">
-              <LottieComponents />
-              <p className=" text-blue-300 font-headings  text-lg">
-                There is no lists....
-              </p>
-            </div>
+            {isLoading ? (
+              <LoadingComponents />
+            ) : (
+              <>
+                {isError ? (
+                  <ErrorComponents />
+                ) : (
+                  <>
+                    {contactData.length !== 0 ? (
+                      <h1>hello</h1>
+                    ) : (
+                      <div className="mt-5 bg-white shadow rounded h-[500px] justify-center items-center flex flex-col gap-y-3">
+                        <LottieComponents />
+                        <p className=" text-blue-300 font-headings  text-lg">
+                          There is no lists....
+                        </p>
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
+            )}
           </div>
           <SheetContent>
             <SheetHeader>
-              <SheetTitle>Contact Information</SheetTitle>
-              <SheetDescription className=" text-basic">
+              <SheetTitle className="text-basic  font-headings">
+                Contact Information
+              </SheetTitle>
+              <SheetDescription className=" text-basic font-light">
                 Make your Contact here. Click save when you're done.
               </SheetDescription>
             </SheetHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input id="name" value="Pedro Duarte" className="col-span-3" />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                  Username
-                </Label>
-                <Input id="username" value="@peduarte" className="col-span-3" />
-              </div>
+            <div className="grid gap-4 py-4 h-full">
+              <FormComponents />
             </div>
-            <SheetFooter>
-              <SheetClose asChild>
-                <Button type="submit">Save changes</Button>
-              </SheetClose>
-            </SheetFooter>
           </SheetContent>
         </div>
       </Sheet>
