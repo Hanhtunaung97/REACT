@@ -22,8 +22,8 @@ module.exports = {
         headings: ["Roboto", "sans-serif"],
       },
       colors: {
-        basic: "#2d6cdf",
-        danger: "red",
+        basic: "#2f89fc",
+        danger: "#ff304f",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

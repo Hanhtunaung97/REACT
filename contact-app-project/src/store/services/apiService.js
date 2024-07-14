@@ -10,7 +10,7 @@ export const apiService = createApi({
       if (token) {
         headers.set("authorization", `Bearer ${JSON.parse(token)}`);
       } else {
-        headers.delete();
+        headers.delete("authorization");
       }
       return headers;
     },

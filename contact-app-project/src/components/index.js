@@ -9,3 +9,5 @@ export { default as LottieComponents } from "./lottieComponent/Lottie.components
 export { default as AuthGuard } from "./guard/Auth.guard";
 // form
 export { default as FormComponents } from "./tools/Form.components";
+// table
+export { default as TableComponents } from "./tools/Table.components";

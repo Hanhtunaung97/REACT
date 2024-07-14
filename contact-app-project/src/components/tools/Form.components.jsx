@@ -1,23 +1,52 @@
 import { ErrorMessage, Form, Formik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import * as yup from "yup";
 import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { useCreateContactMutation } from "../../store/services/EndPoints/contact.endpoints";
 const FormComponents = () => {
+  const [addFun, data] = useCreateContactMutation();
   const initialValue = {
     name: "",
     email: "",
     phone: "",
     address: "",
   };
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values, action) => {
     console.log(values);
+    await addFun(values);
+    action.reset();
   };
+  const validationSchema = yup.object({
+    name: yup
+      .string()
+      .required("Name is required")
+      .min(3, "Name must be at least 3 letters"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Invalid email address"),
+    phone: yup
+      .string()
+      .required("Phone number is required")
+      .min(9, "Number must be at least 9 digits")
+      .max(11, "Number must be at least 9 digits"),
+    address: yup.string().required("Address is required"),
+  });
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
   return (
     <div className="h-full">
-      <Formik initialValues={initialValue} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValue}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        validateOnBlur={false}
+        validateOnChange={false}
+      >
         {({ values, handleBlur, handleChange, isSubmitting, handleReset }) => (
           <>
             <Form>
@@ -106,7 +135,7 @@ const FormComponents = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className=" w-auto  bg-basic mt-3 flex items-center gap-x-2 hover:bg-blue-500 duration-300 active:scale-95"
+                    className=" w-auto  bg-basic mt-3 flex items-center gap-x-2 hover:bg-blue-400 duration-300 active:scale-95"
                   >
                     {isSubmitting && (
                       <Loader2 className=" ml-2 h-4 w-4 animate-spin" />

@@ -67,7 +67,7 @@ const RegisterPage = () => {
         title: "Uh oh! Something went wrong.",
         description: msg,
         action: (
-          <ToastAction altText="Sing In">
+          <ToastAction altText="Sign In">
             <Link to={"/"}>Sign In</Link>
           </ToastAction>
         ),

@@ -6,6 +6,7 @@ import {
   LoadingComponents,
   LottieComponents,
   NavComponents,
+  TableComponents,
 } from "../../components";
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa6";
@@ -36,7 +37,7 @@ const HomePage = () => {
           <div className="container mx-auto">
             <SheetTrigger asChild>
               <div className="mt-5 flex justify-end items-center ">
-                <Button className="flex gap-x-2 bg-basic active:scale-90 duration-300 hover:bg-blue-400">
+                <Button className="flex gap-x-2 bg-basic text-white active:scale-90 duration-300 hover:bg-blue-400">
                   <FaPlus /> Create Contact
                 </Button>
               </div>
@@ -50,7 +51,7 @@ const HomePage = () => {
                 ) : (
                   <>
                     {contactData.length !== 0 ? (
-                      <h1>hello</h1>
+                      <TableComponents data={contactData}/>
                     ) : (
                       <div className="mt-5 bg-white shadow rounded h-[500px] justify-center items-center flex flex-col gap-y-3">
                         <LottieComponents />

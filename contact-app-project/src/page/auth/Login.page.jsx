@@ -8,6 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+import { ToastAction } from "@/components/ui/toast";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ErrorMessage, Form, Formik } from "formik";
@@ -21,6 +24,7 @@ import {
   LoadingComponents,
 } from "../../components";
 const LoginPage = () => {
+  const { toast } = useToast();
   const nav = useNavigate();
   const [signInFun, data] = useSignInMutation();
   const initialValue = {
@@ -44,6 +48,19 @@ const LoginPage = () => {
   useEffect(() => {
     if (data?.data?.success) {
       nav("/home");
+    } else {
+      console.log(data);
+      const msg = data?.data?.message;
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: msg,
+        action: (
+          <ToastAction altText="Sing In">
+            <Link to={"/register"}>Sign In</Link>
+          </ToastAction>
+        ),
+      });
     }
   }, [data]);
   return (
@@ -53,8 +70,11 @@ const LoginPage = () => {
           <LoadingComponents />
         ) : (
           <>
-            {data.isError ? (
-              <ErrorComponents />
+            {data?.data?.success == false ? (
+              <>
+                <ErrorComponents />
+                <Toaster />
+              </>
             ) : (
               <Card className=" basis-1/2">
                 <CardHeader className=" flex justify-between items-center flex-row mb-3 ">
@@ -118,7 +138,7 @@ const LoginPage = () => {
                             <Button
                               type="submit"
                               disabled={isSubmitting}
-                              className=" w-full bg-basic mt-3 flex items-center gap-x-5"
+                              className=" w-full bg-basic mt-3 flex items-center gap-x-5 duration-300 active:scale-95 hover:bg-blue-500"
                             >
                               {isSubmitting && (
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
