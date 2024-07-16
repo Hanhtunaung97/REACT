@@ -2,28 +2,20 @@ import React, { useEffect } from "react";
 import { useProfileQuery } from "../../store/services/EndPoints/auth.endpoints";
 import { useNavigate } from "react-router-dom";
 import LoadingComponents from "../tools/Loading.components";
-const AuthGuard = ({ check, token, children }) => {
+const AuthGuard = ({ check, token, children, path = "/" }) => {
   const nav = useNavigate();
-  const data = useProfileQuery();
+  const { isError, isLoading, data, isSuccess } = useProfileQuery();
   useEffect(() => {
-    // console.log(isError, isLoading, data);
+    console.log(isError, isLoading, data, isSuccess);
     if (check) {
       localStorage.setItem("token", JSON.stringify(token));
-    } else if (data?.data) {
+    } else if (isError) {
+      nav(path);
+    } else if (data && localStorage.getItem("token")) {
       nav("/home");
-    } else if (data?.isError) {
-      nav("/");
     }
-  }, [check, data?.data, data?.isError]);
-  return (
-    <>
-      {data.isLoading ? (
-        <LoadingComponents />
-      ) : (
-        <>{children}</>
-      )}
-    </>
-  );
+  }, [check, data, isError]);
+  return <>{isLoading ? <LoadingComponents /> : <>{children}</>}</>;
 };
 
 export default AuthGuard;

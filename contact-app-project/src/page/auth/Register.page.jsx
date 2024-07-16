@@ -77,7 +77,7 @@ const RegisterPage = () => {
     }
   }, [data]);
   return (
-    <AuthGuard>
+    <AuthGuard path={"/register"}>
       <div className=" w-3/5 mx-auto  flex justify-center items-center h-full">
         {data.isLoading ? (
           <LoadingComponents />

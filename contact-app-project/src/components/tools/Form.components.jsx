@@ -1,23 +1,32 @@
 import { ErrorMessage, Form, Formik } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import * as yup from "yup";
 import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { useCreateContactMutation } from "../../store/services/EndPoints/contact.endpoints";
-const FormComponents = () => {
+import { SheetClose } from "@/components/ui/sheet";
+import {
+  useCreateContactMutation,
+  useUpdateContactMutation,
+} from "../../store/services/EndPoints/contact.endpoints";
+const FormComponents = ({ editData, handleClose }) => {
   const [addFun, data] = useCreateContactMutation();
+  const [updateFun, updateData] = useUpdateContactMutation();
   const initialValue = {
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
+    name: editData.upData?.name || "",
+    email: editData.upData?.email || "",
+    phone: editData.upData?.phone || "",
+    address: editData.upData?.address || "",
   };
-  const handleSubmit = async (values, action) => {
-    console.log(values);
-    await addFun(values);
-    action.reset();
+  const closeRef = useRef();
+  const handleSubmit = async (values) => {
+    if (editData.edit) {
+      await updateFun({ id: editData.upData?.id, ...values });
+    } else {
+      await addFun(values);
+    }
+    closeRef.current.click();
   };
   const validationSchema = yup.object({
     name: yup
@@ -36,8 +45,8 @@ const FormComponents = () => {
     address: yup.string().required("Address is required"),
   });
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    console.log(updateData);
+  }, [updateData]);
   return (
     <div className="h-full">
       <Formik
@@ -124,14 +133,16 @@ const FormComponents = () => {
                   />
                 </div>
                 <div className=" flex justify-between items-center gap-x-3">
-                  <Button
-                    variant="outline"
-                    type="button"
-                    onClick={handleReset}
-                    className=" w-auto  bg-transparent text-basic border-blue-300 hover:bg-blue-50 hover:text-basic border mt-3 block duration-300 active:scale-95"
-                  >
-                    Cancel
-                  </Button>
+                  <SheetClose asChild ref={closeRef}>
+                    <Button
+                      variant="outline"
+                      type="button"
+                      onClick={handleClose}
+                      className=" w-auto  bg-transparent text-basic border-blue-300 hover:bg-blue-50 hover:text-basic border mt-3 block duration-300 active:scale-95"
+                    >
+                      Cancel
+                    </Button>
+                  </SheetClose>
                   <Button
                     type="submit"
                     disabled={isSubmitting}
@@ -140,7 +151,7 @@ const FormComponents = () => {
                     {isSubmitting && (
                       <Loader2 className=" ml-2 h-4 w-4 animate-spin" />
                     )}
-                    Create
+                    {editData?.edit ? "Edit" : "Create"}
                   </Button>
                 </div>
               </div>

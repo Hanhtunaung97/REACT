@@ -32,7 +32,7 @@ const LoginPage = () => {
     password: "",
   };
   const handleSubmit = async (values) => {
-    console.log(values);
+    // console.log(values);
     await signInFun(values);
   };
   const validationSchema = yup.object({
@@ -48,21 +48,21 @@ const LoginPage = () => {
   useEffect(() => {
     if (data?.data?.success) {
       nav("/home");
-    } else {
-      console.log(data);
+    } else if (data?.data?.success == false) {
       const msg = data?.data?.message;
+      console.log(msg);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description: msg,
         action: (
-          <ToastAction altText="Sing In">
-            <Link to={"/register"}>Sign In</Link>
+          <ToastAction altText="Sing Up">
+            <Link to={"/register"}>Sign Up</Link>
           </ToastAction>
         ),
       });
     }
-  }, [data]);
+  }, [data?.data]);
   return (
     <AuthGuard check={data?.data?.success} token={data?.data?.token}>
       <div className=" w-3/5 mx-auto  flex justify-center items-center h-full">

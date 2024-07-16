@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AuthGuard,
   ErrorComponents,
@@ -25,11 +25,25 @@ import { useGetAllContactsQuery } from "../../store/services/EndPoints/contact.e
 
 const HomePage = () => {
   const { isLoading, isError, data, isSuccess } = useGetAllContactsQuery();
-  console.log(isLoading, isError, data, isSuccess);
+  const [editData, setEditData] = useState({
+    edit: false,
+    upData: null,
+  });
+  // console.log(isLoading, isError, data, isSuccess);
   const contactData = data?.contacts?.data;
-  console.log(contactData);
+  // console.log(contactData);
+  const handleEditForm = (id) => {
+    console.log(id);
+    const contactsData = data?.contacts?.data;
+    const finder = contactsData.find((el) => el.id === id);
+    console.log(finder);
+    setEditData({ edit: true, upData: finder });
+  };
+  const handleClose = () => {
+    setEditData({ edit: false, upData: null });
+  };
   return (
-    <AuthGuard>
+    <AuthGuard  >
       <Sheet>
         <div className=" h-screen bg-slate-50">
           <NavComponents />
@@ -50,8 +64,11 @@ const HomePage = () => {
                   <ErrorComponents />
                 ) : (
                   <>
-                    {contactData.length !== 0 ? (
-                      <TableComponents data={contactData}/>
+                    {contactData?.length !== 0 ? (
+                      <TableComponents
+                        handleEditForm={handleEditForm}
+                        apiData={contactData}
+                      />
                     ) : (
                       <div className="mt-5 bg-white shadow rounded h-[500px] justify-center items-center flex flex-col gap-y-3">
                         <LottieComponents />
@@ -65,7 +82,7 @@ const HomePage = () => {
               </>
             )}
           </div>
-          <SheetContent>
+          <SheetContent onClose={handleClose}>
             <SheetHeader>
               <SheetTitle className="text-basic  font-headings">
                 Contact Information
@@ -75,7 +92,7 @@ const HomePage = () => {
               </SheetDescription>
             </SheetHeader>
             <div className="grid gap-4 py-4 h-full">
-              <FormComponents />
+              <FormComponents editData={editData} handleClose={handleClose} />
             </div>
           </SheetContent>
         </div>

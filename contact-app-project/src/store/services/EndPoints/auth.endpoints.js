@@ -22,6 +22,17 @@ const authEndpoints = apiService.injectEndpoints({
         method: "GET",
       }),
     }),
+    logOut: builder.mutation({
+      query: () => ({
+        url: `/user-logout`,
+        method: "POST",
+      }),
+    }),
   }),
 });
-export const { useSignInMutation, useSignUpMutation,useProfileQuery } = authEndpoints;
+export const {
+  useSignInMutation,
+  useSignUpMutation,
+  useProfileQuery,
+  useLogOutMutation,
+} = authEndpoints;
