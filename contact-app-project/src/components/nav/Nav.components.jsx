@@ -16,7 +16,7 @@ const navComponents = () => {
   };
 
   return (
-    <nav className=" fixed w-full h-16 border-b shadow bg-white">
+    <nav className=" fixed z-50 w-full h-16 border-b shadow bg-white ">
       <div className=" container mx-auto flex justify-between items-center  h-full">
         <h1 className=" font-headings font-semibold text-basic text-lg">
           MMS-IT

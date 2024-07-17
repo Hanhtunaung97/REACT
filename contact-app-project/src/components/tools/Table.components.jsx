@@ -55,7 +55,7 @@ const TableComponents = ({ apiData, handleEditForm }) => {
     });
   };
   return (
-    <div className="mt-5 bg-white rounded-lg p-5 shadow">
+    <div className="mt-5 bg-white rounded-lg p-5 shadow h-full">
       <Table>
         <TableCaption className="mt-10 font-semibold text-basic">
           A list of your Contact Information.

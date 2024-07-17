@@ -43,12 +43,12 @@ const HomePage = () => {
     setEditData({ edit: false, upData: null });
   };
   return (
-    <AuthGuard  >
+    <AuthGuard>
       <Sheet>
         <div className=" h-screen bg-slate-50">
           <NavComponents />
           <div className="h-16"></div>
-          <div className="container mx-auto">
+          <div className="container mx-auto h-full">
             <SheetTrigger asChild>
               <div className="mt-5 flex justify-end items-center ">
                 <Button className="flex gap-x-2 bg-basic text-white active:scale-90 duration-300 hover:bg-blue-400">

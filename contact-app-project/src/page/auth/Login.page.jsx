@@ -65,7 +65,7 @@ const LoginPage = () => {
   }, [data?.data]);
   return (
     <AuthGuard check={data?.data?.success} token={data?.data?.token}>
-      <div className=" w-3/5 mx-auto  flex justify-center items-center h-full">
+      <div className=" w-full  xl:w-3/5 xl:mx-auto my-60 md:my-0 md:flex justify-center items-center h-full">
         {data.isLoading ? (
           <LoadingComponents />
         ) : (
@@ -76,7 +76,7 @@ const LoginPage = () => {
                 <Toaster />
               </>
             ) : (
-              <Card className=" basis-1/2">
+              <Card className=" block w-full md:basis-1/2">
                 <CardHeader className=" flex justify-between items-center flex-row mb-3 ">
                   <CardTitle className=" font-headings">Sign In</CardTitle>
                   <CardDescription className="text-basic">
